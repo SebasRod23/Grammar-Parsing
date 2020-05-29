@@ -1,11 +1,5 @@
-class Grammar():
-    def __init__(self, notTerminal, terminal, start, productions):
-        self.not_Terminal=notTerminal
-        self.terminal=terminal
-        self.start=start
-        self.productions=productions
-    def MakeTree(self, string):
-        return
+from Grammar import Grammar
+from Node import Node
 
 def ChooseFile():
     return "test" + input("Select a test file: ") + ".txt"
@@ -40,7 +34,8 @@ def ReadFile(path):
         productions.append((temp[0], temp[1]))
     print(productions)
 
-    return Grammar(not_Terminal,terminal,start,productions)
+    return Grammar(not_Terminal,terminal,Node(start, None),productions)
 
 grammar=ReadFile(ChooseFile())
-print()
+# grammar.MakeTree("bab")
+
