@@ -2,7 +2,17 @@ from Node import Node
 class Tree():
     def __init__(self, root: Node):
         self.root = root
-        self.height = 1
+        self.answer=None
+
+    def CheckDepth(self):
+        return self.CheckMaxDepth(self.root, 1)
+
+    def CheckMaxDepth(self, node, depth):
+        if len(node.childs)==0: return depth
+        maxDepth=1
+        for child in node.childs:
+            maxDepth=max(maxDepth, self.CheckMaxDepth(child, depth+1))
+        return maxDepth
 
     def PrintTree(self, level, node: Node, indent):
         print(indent+"|"+"_" * 3 + node.label)

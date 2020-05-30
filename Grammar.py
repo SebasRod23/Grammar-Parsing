@@ -22,13 +22,13 @@ class Grammar():
             if self.productions[i][0] == symbol: return True
         return False
 
-    def MakeTree(self, string)->Tree:
+    def MakeTree(self, string, maxDepth)->Tree:
         tree=Tree(self.start)
         queue=[]
         queue.append(self.start)
         temp=[""]*3
         child= Node("", None)
-        while len(queue)!=0 and string !=""+temp[0]+temp[1]+temp[2] and child.label!=string:
+        while len(queue)!=0 and  maxDepth>=tree.CheckDepth():
             q=queue.pop(0)
             i=0
             done=False
@@ -36,19 +36,22 @@ class Grammar():
             leftmost = temp[self.GetLeftMostIndex(temp)]
             temp = temp.split(leftmost)
             temp.insert(1, leftmost)
-            while done==False and string!=temp[0]+temp[1]+temp[2] and i<len(self.productions) and child.label!=string:
+            while done==False and i<len(self.productions) and maxDepth>=tree.CheckDepth():
                 j=i+1
 
-                if self.CheckIfPossible(temp[1], i)==False:
+                if not self.CheckIfPossible(temp[1], i):
                     done=True
 
                 else:
                     if self.CheckForNonTerminalSymbols(temp[0]+temp[1]+temp[2], self.productions[i][0]):
                         child=Node(temp[0]+self.productions[i][1]+temp[2], q)
+                        if child.label==string:
+                            print("FOUND")
+                            tree.answer=child
                         q.addChild(child)
                         queue.append(child)
                 i=j
-
-        if string==child.label: print("TRUE")
-        else: print("FALSE")
+        temp=queue.pop(len(queue)-1)
+        pTemp=temp.parent
+        pTemp.childs.remove(temp)
         return tree

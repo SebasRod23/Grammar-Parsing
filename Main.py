@@ -39,6 +39,7 @@ def ReadFile(path):
 
 grammar=ReadFile(ChooseFile())
 print("--------")
-tree=grammar.MakeTree("abb")
+tree=grammar.MakeTree("abbbb", 6)
 tree.PrintTree(0, tree.root, "")
+print(tree.answer)
 
