@@ -13,7 +13,6 @@ class Grammar():
                 return i
         return -1
     def CheckForNonTerminalSymbols(self, string, symbol):
-        print("Symbol to Analyze {} in {}".format(symbol, string))
         for i in range(len(string)):
             if string[i]==symbol: return True
         return False
@@ -28,7 +27,8 @@ class Grammar():
         queue=[]
         queue.append(self.start)
         temp=[""]*3
-        while len(queue)!=0 and string !=""+temp[0]+temp[1]+temp[2]:
+        child= Node("", None)
+        while len(queue)!=0 and string !=""+temp[0]+temp[1]+temp[2] and child.label!=string:
             q=queue.pop(0)
             i=0
             done=False
@@ -36,34 +36,19 @@ class Grammar():
             leftmost = temp[self.GetLeftMostIndex(temp)]
             temp = temp.split(leftmost)
             temp.insert(1, leftmost)
-            while done==False and string!=temp[0]+temp[1]+temp[2] and i<len(self.productions):
-                print("temp={} + {} + {}".format(temp[0],temp[1],temp[2]))
-                print("Current production: {} -> {}".format(self.productions[i][0], self.productions[i][1]))
+            while done==False and string!=temp[0]+temp[1]+temp[2] and i<len(self.productions) and child.label!=string:
                 j=i+1
 
                 if self.CheckIfPossible(temp[1], i)==False:
                     done=True
 
                 else:
-                    print("Enter")
-                    # if self.productions[i][0] == temp[1]: temp[1] = self.productions[i][1]
-                    #for j in range(i+1,len(self.not_Terminal)):
-                    #    if self.productions[j][0]==temp[1]: break
-
                     if self.CheckForNonTerminalSymbols(temp[0]+temp[1]+temp[2], self.productions[i][0]):
                         child=Node(temp[0]+self.productions[i][1]+temp[2], q)
                         q.addChild(child)
                         queue.append(child)
-                        print("Queue", end=": ")
-                        print(queue)
-                        """temp=temp[0]+temp[1]+temp[2]
-                        leftmost = temp[self.GetLeftMostIndex(temp)]
-                        temp = temp.split(leftmost)
-                        temp.insert(1, leftmost)"""
                 i=j
-                print("Done? {}".format(done))
-                print()
 
-        if string==temp[0]+temp[1]+temp[2]: print("TRUE")
+        if string==child.label: print("TRUE")
         else: print("FALSE")
         return tree

@@ -1,5 +1,6 @@
 from Grammar import Grammar
 from Node import Node
+from Tree import Tree
 
 def ChooseFile():
     return "test" + input("Select a test file: ") + ".txt"
@@ -38,5 +39,6 @@ def ReadFile(path):
 
 grammar=ReadFile(ChooseFile())
 print("--------")
-grammar.MakeTree("bbbbabb")
+tree=grammar.MakeTree("abb")
+tree.PrintTree(0, tree.root, "")
 
