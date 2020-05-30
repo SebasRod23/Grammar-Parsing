@@ -37,5 +37,6 @@ def ReadFile(path):
     return Grammar(not_Terminal,terminal,Node(start, None),productions)
 
 grammar=ReadFile(ChooseFile())
-# grammar.MakeTree("bab")
+print("--------")
+grammar.MakeTree("bbbbabb")
 
