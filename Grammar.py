@@ -48,10 +48,12 @@ class Grammar():
                         if child.label==string:
                             print("FOUND")
                             tree.answer=child
+                            child.changeColor("green")
                         q.addChild(child)
                         queue.append(child)
                 i=j
         temp=queue.pop(len(queue)-1)
         pTemp=temp.parent
         pTemp.childs.remove(temp)
+        tree.PrintTree(0, tree.root, "")
         return tree
