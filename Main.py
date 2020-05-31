@@ -2,13 +2,14 @@ from Grammar import Grammar
 from Node import Node
 from Tree import Tree
 from tkinter import *
+from tkinter import messagebox
 
 path = "test1.txt"
 grammar: Grammar
 tree: Tree
 
 def Render(string, height):
-    global path, grammar, tree, canvas
+    global path, grammar, tree, canvas, mainWindow
     grammar = ReadFile(path)
     if CheckString(string, grammar.terminal):
         # Make tree
@@ -16,7 +17,7 @@ def Render(string, height):
         # Render Tree
         tree.RenderTree(canvas)
     else:
-        print("String not valid")
+        messagebox.showinfo(title="Invalid input", message='The input: "{}" is not accepted, use only terminal symbols of the {} terminal alphabet'.format(string, path.upper()))
 
 def CheckString(string:str, terminal):
     if len(string)==0: return False
@@ -75,6 +76,7 @@ mainWindow.resizable(0, 0)
 
 canvas = Canvas(mainWindow, bg="#000000", height=screen_height - 50, bd=0, highlightthickness=0, relief='ridge')
 canvas.pack(side=TOP, fill=X)
+
 infoFrame = Frame(mainWindow, bg=colorBottom, height=50)
 infoFrame.pack(side=BOTTOM, fill=X)
 
