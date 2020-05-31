@@ -17,11 +17,11 @@ class Tree():
             maxDepth = max(maxDepth, self.CheckMaxDepth(child, depth + 1))
         return maxDepth
 
-    def CheckMinSpace(self, node, minSpace):
-        if len(node.childs) == 0: return minSpace
+    def CheckMinSpace(self, node):
+        # if len(node.childs) == 0: return minSpace
         space = node.space[1][0] - node.space[0][0]
         for child in node.childs:
-            space = max(space, self.CheckMaxDepth(child, minSpace + 1))
+            space = min(space, self.CheckMinSpace(child))
         return space
 
     def PrintTree(self, level, node: Node, indent):
@@ -49,7 +49,7 @@ class Tree():
                 self.RenderLeafs(self.root.childs[i], xOffset * i, xOffset * (i + 1), yOffset, yOffset * 2)
 
         # Calculate min space
-        space = self.CheckMinSpace(self.root, self.root.space[1][0] - self.root.space[0][0])
+        space = self.CheckMinSpace(self.root)
         space = min(space, self.root.space[1][1] - self.root.space[0][1])
         radius = space / 2
         radius = radius - 5

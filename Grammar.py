@@ -59,6 +59,8 @@ class Grammar():
         pTemp = temp.parent
         pTemp.childs.remove(temp)
         tree.PrintTree(0, tree.root, "")
+        if tree.answer!=None: print("The string was found!")
+        else: print("The string was not found")
         print("-----------------------------------------")
 
         return tree
