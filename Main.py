@@ -17,7 +17,7 @@ def Render(string, height):
         # Render Tree
         tree.RenderTree(canvas)
     else:
-        messagebox.showinfo(title="Invalid input", message='The input: "{}" is not accepted, use only terminal symbols of the {} terminal alphabet'.format(string, path.upper()))
+        messagebox.showinfo(title="Invalid input", message='The input: "{}" is not accepted, use only terminal symbols of the {}'.format(string, path.upper())+"'s terminal alphabet: {}".format(grammar.terminal))
 
 def CheckString(string:str, terminal):
     if len(string)==0: return False
@@ -30,8 +30,18 @@ def CheckString(string:str, terminal):
     return True
 
 def ChooseFile(num):
-    global path
+    global path, bttnOne,bttnTwo, bttnThree, bttnFour
+    colorSelected="#625E5E"
     path = "test{}.txt".format(num)
+    bttnOne.config(bg="white")
+    bttnTwo.config(bg="white")
+    bttnThree.config(bg="white")
+    bttnFour.config(bg="white")
+    if num==1: bttnOne.config(bg=colorSelected)
+    elif num == 2: bttnTwo.config(bg=colorSelected)
+    elif num == 3: bttnThree.config(bg=colorSelected)
+    elif num == 4: bttnFour.config(bg=colorSelected)
+
 
 
 def ReadFile(path):
@@ -83,7 +93,7 @@ infoFrame.pack(side=BOTTOM, fill=X)
 lblSelect = Label(infoFrame, text="Select an input file:", height=50, bg=colorBottom, fg="white")
 lblSelect.pack(side=LEFT, padx=(20, 0))
 
-bttnOne = Button(infoFrame, text="File 1", width=15, height=40, command=lambda: ChooseFile(1))
+bttnOne = Button(infoFrame, text="File 1", width=15, height=40, bg="#625E5E", command=lambda: ChooseFile(1))
 bttnOne.pack(side=LEFT, padx=(20, 0), pady=5)
 bttnTwo = Button(infoFrame, text="File 2", width=15, height=40, command=lambda: ChooseFile(2))
 bttnTwo.pack(side=LEFT, pady=5)
