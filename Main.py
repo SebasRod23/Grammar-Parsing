@@ -8,43 +8,56 @@ path = "test1.txt"
 grammar: Grammar
 tree: Tree
 
+
 def Render(string, height):
     global path, grammar, tree, canvas, mainWindow
     grammar = ReadFile(path)
     if CheckString(string, grammar.terminal):
+        print("-----------------------------------------")
+        print("Creating parsing-tree for: " + string)
+        print("-----------------------------------------")
         # Make tree
-        tree=grammar.MakeTree(string, int(height))
+        tree = grammar.MakeTree(string, int(height))
         # Render Tree
         tree.RenderTree(canvas)
     else:
-        messagebox.showinfo(title="Invalid input", message='The input: "{}" is not accepted, use only terminal symbols of the {}'.format(string, path.upper())+"'s terminal alphabet: {}".format(grammar.terminal))
+        message = 'The input: "{}" is not accepted, use only terminal symbols of the {}'.format(string,
+                                                                                                path.upper()) + "'s terminal alphabet: {}".format(
+            grammar.terminal)
+        messagebox.showinfo(title="Invalid input", message=message)
 
-def CheckString(string:str, terminal):
-    if len(string)==0: return False
+
+def CheckString(string: str, terminal):
+    if len(string) == 0: return False
     for i in range(len(string)):
         if string[i].isupper(): return False
-        state=False
+        state = False
         for j in range(len(terminal)):
-            if string[i]==terminal[j]: state=True
+            if string[i] == terminal[j]: state = True
         if not state: return False
     return True
 
+
 def ChooseFile(num):
-    global path, bttnOne,bttnTwo, bttnThree, bttnFour
-    colorSelected="#625E5E"
+    global path, bttnOne, bttnTwo, bttnThree, bttnFour
+    colorSelected = "#625E5E"
     path = "test{}.txt".format(num)
     bttnOne.config(bg="white")
     bttnTwo.config(bg="white")
     bttnThree.config(bg="white")
     bttnFour.config(bg="white")
-    if num==1: bttnOne.config(bg=colorSelected)
-    elif num == 2: bttnTwo.config(bg=colorSelected)
-    elif num == 3: bttnThree.config(bg=colorSelected)
-    elif num == 4: bttnFour.config(bg=colorSelected)
-
+    if num == 1:
+        bttnOne.config(bg=colorSelected)
+    elif num == 2:
+        bttnTwo.config(bg=colorSelected)
+    elif num == 3:
+        bttnThree.config(bg=colorSelected)
+    elif num == 4:
+        bttnFour.config(bg=colorSelected)
 
 
 def ReadFile(path):
+    print("Reading " + path)
     file = open(path, "r")
     lines = file.readlines()
     # print(lines)
@@ -75,7 +88,8 @@ def ReadFile(path):
 
     return Grammar(not_Terminal, terminal, Node(start, None), productions)
 
-colorBottom="#282626"
+
+colorBottom = "#282626"
 
 mainWindow = Tk()
 mainWindow.title("Parsing Tree")
@@ -83,6 +97,7 @@ screen_width = mainWindow.winfo_screenwidth() - 50
 screen_height = mainWindow.winfo_screenheight() - 100
 mainWindow.geometry("{}x{}".format(screen_width, screen_height))
 mainWindow.resizable(0, 0)
+mainWindow.iconbitmap(default="icon.ico")
 
 canvas = Canvas(mainWindow, bg="#000000", height=screen_height - 50, bd=0, highlightthickness=0, relief='ridge')
 canvas.pack(side=TOP, fill=X)
@@ -112,7 +127,8 @@ lblHeight.pack(side=LEFT, padx=(20, 0))
 spbHeight = Spinbox(infoFrame, from_=1, to=10)
 spbHeight.pack(side=LEFT, padx=(10, 0))
 
-bttnRender = Button(infoFrame, text="Render", width=15, height=40, command=lambda: Render(txtString.get(), spbHeight.get()))
+bttnRender = Button(infoFrame, text="Render", width=15, height=40,
+                    command=lambda: Render(txtString.get(), spbHeight.get()))
 bttnRender.pack(side=RIGHT, padx=(0, 30), pady=5)
 
 mainWindow.mainloop()
