@@ -26,11 +26,9 @@ class Node():
         self.center=center
         circle=canvas.create_oval(center[0]-radius, center[1]-radius, center[0]+radius, center[1]+radius, fill=self.color)
         mult=0.75
-        font="Impact"
         if height>=5:
-            mult=(1/height)
-            font="verdana"
-        text=canvas.create_text(center[0],center[1], text=self.label, fill="white", font=(font, int(mult*radius)))
+            mult=(1/height)+0.01*height
+        text=canvas.create_text(center[0],center[1], text=self.label, fill="white", font=("Impact", int(mult*radius)))
         canvas.tag_raise(text)
         canvas.tag_lower(circle)
 
