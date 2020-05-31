@@ -7,17 +7,13 @@ path = "test1.txt"
 grammar: Grammar
 tree: Tree
 
-
-# string="S"
-# height=1
-
 def Render(string, height):
     global path, grammar, tree, canvas
     grammar = ReadFile(path)
     if CheckString(string, grammar.terminal):
         # Make tree
-        print("String valid")
         tree=grammar.MakeTree(string, int(height))
+        # Render Tree
         tree.RenderTree(canvas)
     else:
         print("String not valid")
@@ -68,27 +64,21 @@ def ReadFile(path):
 
     return Grammar(not_Terminal, terminal, Node(start, None), productions)
 
+colorBottom="#282626"
 
-
-# grammar=ReadFile(ChooseFile())
-# print("--------")
-# tree=grammar.MakeTree("abbbb", 4)
-# tree.PrintTree(0, tree.root, "")
-# print(tree.answer)
 mainWindow = Tk()
 mainWindow.title("Parsing Tree")
 screen_width = mainWindow.winfo_screenwidth() - 50
 screen_height = mainWindow.winfo_screenheight() - 100
 mainWindow.geometry("{}x{}".format(screen_width, screen_height))
-mainWindow.configure(bg='red')
 mainWindow.resizable(0, 0)
 
-canvas = Canvas(mainWindow, bg="blue", height=screen_height - 50, bd=0, highlightthickness=0, relief='ridge')
+canvas = Canvas(mainWindow, bg="#000000", height=screen_height - 50, bd=0, highlightthickness=0, relief='ridge')
 canvas.pack(side=TOP, fill=X)
-infoFrame = Frame(mainWindow, bg="green", height=50)
+infoFrame = Frame(mainWindow, bg=colorBottom, height=50)
 infoFrame.pack(side=BOTTOM, fill=X)
 
-lblSelect = Label(infoFrame, text="Select an input file:", height=50)
+lblSelect = Label(infoFrame, text="Select an input file:", height=50, bg=colorBottom, fg="white")
 lblSelect.pack(side=LEFT, padx=(20, 0))
 
 bttnOne = Button(infoFrame, text="File 1", width=15, height=40, command=lambda: ChooseFile(1))
@@ -100,12 +90,12 @@ bttnThree.pack(side=LEFT, pady=5)
 bttnFour = Button(infoFrame, text="File 4", width=15, height=40, command=lambda: ChooseFile(4))
 bttnFour.pack(side=LEFT, pady=5)
 
-lblString = Label(infoFrame, text="String:", height=50)
+lblString = Label(infoFrame, text="String:", height=50, bg=colorBottom, fg="white")
 lblString.pack(side=LEFT, padx=(40, 0))
 txtString = Entry(infoFrame, width=30)
 txtString.pack(side=LEFT, padx=(5, 0))
 
-lblHeight = Label(infoFrame, text="Height:", height=50)
+lblHeight = Label(infoFrame, text="Height:", height=50, bg=colorBottom, fg="white")
 lblHeight.pack(side=LEFT, padx=(20, 0))
 spbHeight = Spinbox(infoFrame, from_=1, to=10)
 spbHeight.pack(side=LEFT, padx=(10, 0))

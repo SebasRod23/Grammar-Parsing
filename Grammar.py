@@ -32,10 +32,11 @@ class Grammar():
             q=queue.pop(0)
             i=0
             done=False
-            temp=q.label
-            leftmost = temp[self.GetLeftMostIndex(temp)]
-            temp = temp.split(leftmost)
-            temp.insert(1, leftmost)
+            leftmost = self.GetLeftMostIndex(q.label)
+            temp=[""]*3
+            temp[0]=q.label[0:leftmost]
+            temp[1]=q.label[leftmost]
+            temp[2]=q.label[leftmost+1:]
             while done==False and i<len(self.productions) and maxDepth>=tree.CheckDepth():
                 j=i+1
 
@@ -46,9 +47,8 @@ class Grammar():
                     if self.CheckForNonTerminalSymbols(temp[0]+temp[1]+temp[2], self.productions[i][0]):
                         child=Node(temp[0]+self.productions[i][1]+temp[2], q)
                         if child.label==string:
-                            print("FOUND")
                             tree.answer=child
-                            child.changeColor("green")
+                            child.changeColor("#0C4D07")
                         q.addChild(child)
                         queue.append(child)
                 i=j

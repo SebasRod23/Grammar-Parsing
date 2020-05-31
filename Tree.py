@@ -23,7 +23,8 @@ class Tree():
         return space
 
     def PrintTree(self, level, node: Node, indent):
-        print(indent+"|"+"_" * 3 + node.label)
+        if self.answer==node: print(indent+"|"+"_" * 3 + node.label+"---> FOUND")
+        else: print(indent+"|"+"_" * 3 + node.label)
         for i in range(len(node.childs)-1):
             self.PrintTree(level + 1, node.childs[i], indent+"\t|")
         if len(node.childs)>0:
@@ -50,16 +51,16 @@ class Tree():
         radius=radius-5
 
         # Place all nodes
-        self.PlaceLeaf(self.root, radius, canvas)
+        self.PlaceLeaf(self.root, radius, canvas, self.CheckDepth())
 
 
 
-    def PlaceLeaf(self, node, radius, canvas):
-        node.PlaceNode(radius, canvas)
+    def PlaceLeaf(self, node, radius, canvas, height):
+        node.PlaceNode(radius, canvas, height)
         node.PlaceLine(canvas)
         if len(node.childs)>0:
             for child in node.childs:
-                self.PlaceLeaf(child, radius, canvas)
+                self.PlaceLeaf(child, radius, canvas, height)
 
     def RenderLeafs(self, node: Node, xo, xf, yo, yf):
         # print("{}: xo={}, xf={}, yo={}, yf={}".format(node.label, xo, xf, yo, yf))
