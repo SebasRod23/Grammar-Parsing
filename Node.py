@@ -2,6 +2,10 @@ from tkinter import *
 
 
 class Node():
+    """Node's constructor
+    :param string: the label of the node
+    :param parent: the node's parent, if it is the root then it is null
+    """
     def __init__(self, string, parent):
         self.label = string
         self.parent = parent
@@ -10,9 +14,14 @@ class Node():
         self.space = ((0, 0), (0, 0))
         self.center = (0, 0)
 
+    """Adds a given node as a child of this node
+    :param child: node to be added to this node's childs
+    """
     def addChild(self, child):
         self.childs.append(child)
-
+    """Changes the color of the path to this node for a given color
+    :param color: the color to be changed
+    """
     def changeColor(self, color):
         temp: Node
         temp = self
@@ -20,10 +29,12 @@ class Node():
             temp.color = color
             temp = temp.parent
 
-    def PlaceNode(self, radius, canvas: Canvas, height):
-        # radius = radius / 2
-        # circle=canvas.create_oval(25,25,75,75, fill="black")
-        # canvas.create_text(50,50,text="Circle", fill="white")
+    """Draws this node in the canvas
+    :param radius: the radius of the circle that will be drawn in the canvas
+    :param canvas: the canvas where this node will be drawn
+    :type canvas: tkinter.Canvas
+    """
+    def PlaceNode(self, radius, canvas: Canvas):
         center = (self.space[1][0] - self.space[0][0], self.space[1][1] - self.space[0][1])
         center = (self.space[0][0] + center[0] / 2, self.space[0][1] + center[1] / 2)
         self.center = center
@@ -31,15 +42,14 @@ class Node():
                                     fill=self.color)
         font="verdana"
         mult=0.5
-        """mult = 0.75
-        font = "Impact"
-        if height >= 5:
-            mult = (1 / height) + 0.01 * height / 2"""
-            # font = "verdana"
         text = canvas.create_text(center[0], center[1], text=self.label, fill="white", font=(font, int(mult * radius)))
         canvas.tag_raise(text)
         canvas.tag_lower(circle)
 
+    """Draws a line in the canvas between this node and its parent if the latter is not null
+        :param canvas: the canvas where this node will be drawn
+        :type canvas: tkinter.Canvas
+        """
     def PlaceLine(self, canvas: Canvas):
         if self.parent != None:
             line = canvas.create_line(self.center[0], self.center[1], self.parent.center[0], self.parent.center[1],

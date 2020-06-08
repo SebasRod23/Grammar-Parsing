@@ -3,11 +3,24 @@ from Node import Node
 
 
 class Grammar():
+    """Grammar constructor
+    :param notTerminal: array of str of the non-terminal symbols
+    :param terminal: array of str of the terminal symbols
+    :param start: starting node
+    :type start: Node
+    :param productions: array of pairs that represent the productions of the grammar
+    """
+
     def __init__(self, notTerminal, terminal, start: Node, productions):
         self.not_Terminal = notTerminal
         self.terminal = terminal
         self.start = start
         self.productions = productions
+
+    """Check the given string and return the index of the leftmost non-terminal symbol
+    :param string: the str to be analyzed
+    :returns: leftmost not-terminal symbol's index
+    """
 
     def GetLeftMostIndex(self, string):
         for i in range(len(string)):
@@ -15,16 +28,35 @@ class Grammar():
                 return i
         return -1
 
+    """Check the string and return True if you find the given non-terminal symbol in the string, otherwise return False
+    :param string: the str to be analyzed
+    :param symbol: the non-terminal symbol to find
+    :returns: True if found symbol in string, otherwise returns False
+    """
+
     def CheckForNonTerminalSymbols(self, string, symbol):
         for i in range(len(string)):
             if string[i] == symbol: return True
         return False
+
+    """Check the string and return True if you find the given non-terminal symbol in the productions of the grammar not yet used, otherwise returns False
+        :param symbol: the non-terminal symbol to find
+        :param fromIndex: the index from where to start
+        :returns: True if found symbol in productions from the starting index, otherwise returns False
+        """
 
     def CheckIfPossible(self, symbol, fromIndex):
         for i in range(fromIndex, len(self.productions)):
             if self.productions[i][0] == symbol: return True
         return False
 
+    # Make logical and print the tree
+    """Returns the parsing tree of the grammar given a string and a max depth and if found it prints the tree in the console and changes the color of the path to the string in the GUI
+    :param string: the str to be searched in the tree
+    :param maxDepth: the max depth in which the given string will be searched
+    :returns: the parsing tree of the grammar, either with the string having been found or not
+    :rtype: Tree
+    """
     def MakeTree(self, string, maxDepth) -> Tree:
         tree = Tree(self.start)
         queue = []
@@ -59,8 +91,10 @@ class Grammar():
         pTemp = temp.parent
         pTemp.childs.remove(temp)
         tree.PrintTree(0, tree.root, "")
-        if tree.answer!=None: print("The string was found!")
-        else: print("The string was not found")
+        if tree.answer != None:
+            print("The string was found!")
+        else:
+            print("The string was not found")
         print("-----------------------------------------")
 
         return tree

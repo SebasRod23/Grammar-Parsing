@@ -9,13 +9,18 @@ path = "test1.txt"
 grammar: Grammar
 tree: Tree
 
+"""Render the parsing tree with the rules of the selected file and given a string to be searched and the max height of the tree
+:param string: the string to be searched
+:param height: the maximum height of the tree
+"""
+
 
 def Render(string, height):
     global path, grammar, tree, canvas, mainWindow
     grammar = ReadFile(path)
     if CheckString(string, grammar.terminal):
         print("-----------------------------------------")
-        print("Creating parsing-tree for: " + string+", with height: {}".format(height))
+        print("Creating parsing-tree for: " + string + ", with height: {}".format(height))
         print("-----------------------------------------")
         # Make tree
         tree = grammar.MakeTree(string, int(height))
@@ -28,6 +33,14 @@ def Render(string, height):
         messagebox.showinfo(title="Invalid input", message=message)
 
 
+"""Validates a given string, it is validated if all its characters are terminal symbols of a given terminal alphabet
+:param string: str to be validated
+:type string:str
+:param terminal: an array of characters that represents a terminal alphabet
+:returns: True if it is valid, otherwise returns False
+"""
+
+
 def CheckString(string: str, terminal):
     if len(string) == 0: return False
     for i in range(len(string)):
@@ -38,6 +51,9 @@ def CheckString(string: str, terminal):
         if not state: return False
     return True
 
+"""Changes the path for the file that will be used in the parsing and changes the color of the selected button
+:param num: the selected file's number
+"""
 
 def ChooseFile(num):
     global path, bttnOne, bttnTwo, bttnThree, bttnFour
@@ -56,7 +72,10 @@ def ChooseFile(num):
     elif num == 4:
         bttnFour.config(bg=colorSelected)
 
-
+"""Reads a file and assigns its rules to a grammar
+:param path: the path of the selected file
+:returns: the grammar constructed by the rules found in the selected file
+"""
 def ReadFile(path):
     print("Reading " + path)
     file = open(path, "r")
@@ -89,6 +108,8 @@ def ReadFile(path):
 
     return Grammar(not_Terminal, terminal, Node(start, None), productions)
 
+
+print("Version 2")
 # Window script
 
 # Color for buttons when selected
